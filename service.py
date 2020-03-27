@@ -5,8 +5,10 @@ import sys
 from threading import Thread
 import time
 
+uri = 'https://api.thinger.io/v1/users/<user>/buckets/<bucket_id>/data?authorization=<auth_key>'
 if len(sys.argv) != 2:
     print('Usage {0} <uri>'.format(sys.argv[0]))
+    print('  uri: {0}'.format(uri))
     exit()
 
 rest_uri = sys.argv[1]
