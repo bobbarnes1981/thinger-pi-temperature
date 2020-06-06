@@ -37,7 +37,7 @@ class Sensor(object):
             raw = self.raw()
         temp = float(raw[1].strip()[-5:]) / 1000 # convert to decimal
         temp = temp + temp_adj # adjust for rubbish sensors
-        temp = round(temp*2)/2 # to nearest 0.5
+        #temp = round(temp*2)/2 # to nearest 0.5
         return temp
 
 class Service(Thread):
