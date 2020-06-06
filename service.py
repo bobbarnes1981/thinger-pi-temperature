@@ -35,7 +35,10 @@ class Sensor(object):
         while raw[0].strip()[-3:] != 'YES':
             time.sleep(0.5)
             raw = self.raw()
-        return (float(raw[1].strip()[-5:]) / 1000) + temp_adj
+        temp = float(raw[1].strip()[-5:]) / 1000 # convert to decimal
+        temp = temp + temp_adj # adjust for rubbish sensors
+        temp = round(temp*2)/2 # to nearest 0.5
+        return temp
 
 class Service(Thread):
     def __init__(self, sensor):
