@@ -6,12 +6,15 @@ from threading import Thread
 import time
 
 uri = 'https://api.thinger.io/v1/users/<user>/buckets/<bucket_id>/data?authorization=<auth_key>'
-if len(sys.argv) != 2:
-    print('Usage {0} <uri>'.format(sys.argv[0]))
+if len(sys.argv) < 2 or len(sys.argv) > 3:
+    print('Usage {0} <uri> [offset]'.format(sys.argv[0]))
     print('  uri: {0}'.format(uri))
     exit()
 
 rest_uri = sys.argv[1]
+temp_adj = 0
+if len(sys.argv) == 3:
+    temp_adj = int(sys.argv[2])
 
 class Sensor(object):
     def __init__(self):
@@ -32,7 +35,7 @@ class Sensor(object):
         while raw[0].strip()[-3:] != 'YES':
             time.sleep(0.5)
             raw = self.raw()
-        return float(raw[1].strip()[-5:]) / 1000
+        return (float(raw[1].strip()[-5:]) / 1000) + temp_adj
 
 class Service(Thread):
     def __init__(self, sensor):
