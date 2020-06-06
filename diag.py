@@ -1,5 +1,14 @@
+import os
 
-path = '/sys/bus/w1/devices/28-01145379d7aa/w1_slave'
+def get_path():
+    BASE = '/sys/bus/w1/devices/'
+    FILE = '/w1_slave'
+    directories = os.listdir(BASE)
+    for directory in directories:
+        if directory.startswith('28'):
+            return BASE + directory + FILE
+    return None
+path = get_path()
 
 # 125c is 0x7D0 (2000)
 scale = 0x7D0 / 125.0
